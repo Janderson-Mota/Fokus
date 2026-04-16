@@ -1,25 +1,46 @@
+/* =============================================
+   FOKUS — CSS Redesign
+   Estética: Dark luxury / glassmorphism sutil
+   ============================================= */
+
 :root {
     --color-primary: #123456;
     --color-secondary: #FFF;
     --azul-royal: #144480;
-    --fundo-card-timer: rgba(20, 68, 128, 0.30);
+    --fundo-card-timer: rgba(20, 68, 128, 0.18);
     --lils: #B872FF;
-    --linear-botes: linear-gradient(180deg, #B872FF 0%, #144480 100%);
+    --linear-botes: linear-gradient(135deg, #B872FF 0%, #144480 100%);
+
+    --glass-border: rgba(255, 255, 255, 0.10);
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glow-purple: rgba(184, 114, 255, 0.35);
+    --glow-blue: rgba(20, 68, 128, 0.5);
+
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-med:  0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ── Temas de contexto ─────────────────────── */
 [data-contexto="foco"] {
-    --main-bg-color: linear-gradient(180deg, #8B1FF8 0%, #041832 48.44%, #01080E 100%);
+    --main-bg-color: linear-gradient(160deg, #4A0E8F 0%, #0D1F3C 45%, #010810 100%);
+    --accent:        #B872FF;
+    --accent-glow:   rgba(184, 114, 255, 0.4);
 }
 
 [data-contexto="descanso-curto"] {
-    --main-bg-color: linear-gradient(180deg, #0F725C 0%, #041832 48.44%, #01080E 100%);
+    --main-bg-color: linear-gradient(160deg, #0A5C4A 0%, #061E2E 45%, #010810 100%);
+    --accent:        #00E5A0;
+    --accent-glow:   rgba(0, 229, 160, 0.35);
 }
 
 [data-contexto="descanso-longo"] {
-    --main-bg-color: linear-gradient(180deg, #1875E9 0%, #041832 48.44%, #01080E 100%);
+    --main-bg-color: linear-gradient(160deg, #0D4FA8 0%, #061628 45%, #010810 100%);
+    --accent:        #5AB4FF;
+    --accent-glow:   rgba(90, 180, 255, 0.35);
 }
 
-* {
+/* ── Reset & Base ──────────────────────────── */
+*, *::before, *::after {
     box-sizing: border-box;
     max-width: 100%;
 }
@@ -28,26 +49,53 @@ html {
     background: var(--main-bg-color);
     min-height: 100vh;
     font-size: 10px;
+    transition: background var(--transition-med);
 }
 
 body {
     min-height: 100vh;
-    background: url("/imagens/pattern.png");
+    background: url('./imagens/pattern.png');
     background-size: cover;
     background-repeat: no-repeat;
+    overflow-x: hidden;
+}
+
+/* Camada de ruído sutil sobre o fundo */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Unbounded', cursive;
 }
 
+/* ── Header / Logo ─────────────────────────── */
+.app__header {
+    position: relative;
+    z-index: 1;
+}
+
 .app__logo-figure {
     display: flex;
     justify-content: center;
-    padding: 4rem 0;
+    padding: 4rem 0 3rem;
 }
 
+.app__logo-image {
+    filter: drop-shadow(0 0 18px var(--accent-glow, rgba(184,114,255,0.4)));
+    transition: filter var(--transition-med);
+}
+
+/* ── Banner ────────────────────────────────── */
 .app__section-banner-container {
+    position: relative;
+    z-index: 1;
     width: 99rem;
     margin: 0 auto;
     display: flex;
@@ -58,33 +106,56 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .app__title {
-    line-height: 150%;
+    line-height: 155%;
     font-size: 5.2rem;
     font-style: normal;
     color: var(--color-secondary);
     font-weight: 200;
     max-width: 46rem;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+    animation: fadeSlideUp 0.7s var(--transition-med) both;
 }
 
 .app__title-strong {
-    font-weight: 600;
+    font-weight: 700;
+    color: var(--accent, #B872FF);
+    transition: color var(--transition-med);
 }
 
+.app__image {
+    filter: drop-shadow(0 8px 48px var(--accent-glow, rgba(184,114,255,0.3)));
+    transition: filter var(--transition-med);
+    animation: floatImage 6s ease-in-out infinite;
+}
+
+/* ── Card central ──────────────────────────── */
 .app__section-card-container {
     display: flex;
     justify-content: center;
+    position: relative;
+    z-index: 1;
 }
 
 .app__card {
-    border-radius: 3.2rem;
-    border: 0.2rem solid var(--azul-royal);
-    background: var(--fundo-card-timer);
-    padding: 2.4rem;
-    margin: 8rem 0;
+    border-radius: 2.8rem;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    padding: 3.2rem;
+    margin: 6rem 0;
     width: 59rem;
     max-width: 90%;
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,0.04) inset,
+        0 32px 80px rgba(0,0,0,0.45),
+        0 0 60px var(--accent-glow, rgba(184,114,255,0.15));
+    transition: box-shadow var(--transition-med);
+    animation: cardEntrance 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* ── Botões de contexto ────────────────────── */
 .app__card-list {
     list-style: none;
     padding: 0;
@@ -92,92 +163,80 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1.6rem;
+    gap: 0.8rem;
+    background: rgba(0,0,0,0.2);
+    border-radius: 1.6rem;
+    padding: 0.6rem;
+    border: 1px solid var(--glass-border);
 }
 
 .app__card-button {
     font-family: Montserrat;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-style: normal;
     font-weight: 400;
     line-height: 150%;
     background: none;
-    padding: 0.8rem;
-    color: var(--color-secondary);
+    padding: 0.8rem 1.6rem;
+    color: rgba(255,255,255,0.55);
     border: none;
     cursor: pointer;
-    outline: inherit;
+    outline: none;
+    border-radius: 1.2rem;
+    transition: color var(--transition-fast), background var(--transition-fast);
+    white-space: nowrap;
+}
+
+.app__card-button:hover:not(.active) {
+    color: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.06);
 }
 
 .app__card-button.active {
-    border-radius: 0.8rem;
-    background: var(--azul-royal);
+    background: var(--accent, #B872FF);
+    color: #fff;
     font-weight: 600;
+    box-shadow: 0 4px 24px var(--accent-glow, rgba(184,114,255,0.45));
+    transition: background var(--transition-med), box-shadow var(--transition-med);
 }
 
+/* ── Timer ─────────────────────────────────── */
 .app__card-timer {
     color: var(--color-secondary);
     text-align: center;
-    font-family: Unbounded;
-    font-size: 12rem;
+    font-family: 'Unbounded', cursive;
+    font-size: 11rem;
     font-style: normal;
     font-weight: 700;
-    line-height: normal;
-    margin: 3.2rem;
-    text-align: center;
+    line-height: 1;
+    margin: 3.6rem 0 2.8rem;
+    letter-spacing: -0.04em;
+    text-shadow:
+        0 0 40px var(--accent-glow, rgba(184,114,255,0.5)),
+        0 2px 20px rgba(0,0,0,0.5);
+    transition: text-shadow var(--transition-med);
 }
 
+/* ── Toggle de música ──────────────────────── */
 .app__card-list-label {
-    color: var(--color-secondary);
+    color: rgba(255,255,255,0.7);
     font-family: Montserrat;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-style: normal;
     font-weight: 400;
+    letter-spacing: 0.02em;
 }
 
-.app__card-primary-button-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.app__card-primary-button {
-    padding: 0.8rem;
-    width: 12rem;
-    color: var(--color-secondary);
+/* Segunda lista (toggle + label) */
+.app__card-list + .app__card-list {
+    background: transparent;
     border: none;
-    cursor: pointer;
-    outline: inherit;
-    border-radius: 3.2rem;
-    background: var(--linear-botes);
-    margin-top: 3.2rem;
-    font-size: 1.8rem;
-    display: flex;
-    align-items: center;
+    padding: 0;
+    gap: 1.2rem;
+    margin-top: 2rem;
     justify-content: center;
-    gap: 1rem;
 }
 
-.app__footer {
-    display: flex;
-    width: 100%;
-    padding: 2.8rem 6rem;
-    justify-content: center;
-    align-items: center;
-    background: #010B15;
-}
-
-.app__footer-text {
-    color: rgba(182, 182, 182, 0.8);
-    text-align: center;
-    font-family: Montserrat;
-    font-size: 1.5rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%;
-}
-
-/* toggle */
 .toggle {
     cursor: pointer;
     display: inline-block;
@@ -185,41 +244,42 @@ h1, h2, h3, h4, h5, h6 {
 
 .toggle-switch {
     display: inline-block;
-    background: #ccc;
+    background: rgba(255,255,255,0.15);
     border-radius: 1.6rem;
-    width: 5.8rem;
-    height: 3.2rem;
+    width: 5.2rem;
+    height: 2.8rem;
     position: relative;
     vertical-align: middle;
-    transition: background 0.25s;
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: background var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.toggle-switch:before, .toggle-switch:after {
-    content: "";
-}
-
-.toggle-switch:before {
+.toggle-switch::before {
+    content: '';
     display: block;
-    background: linear-gradient(to bottom, #fff 0%, #eee 100%);
+    background: #fff;
     border-radius: 50%;
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 2rem;
+    height: 2rem;
     position: absolute;
-    top: 0.4rem;
-    left: 0.4rem;
-    transition: left 0.25s;
+    top: 0.3rem;
+    left: 0.3rem;
+    transition: left var(--transition-fast), box-shadow var(--transition-fast);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 
-.toggle:hover .toggle-switch:before {
-    background: linear-gradient(to bottom, #fff 0%, #fff 100%);
+.toggle:hover .toggle-switch::before {
+    box-shadow: 0 1px 8px rgba(0,0,0,0.4);
 }
 
 .toggle-checkbox:checked + .toggle-switch {
-    background: var(--lils);
+    background: var(--accent, #B872FF);
+    border-color: var(--accent, #B872FF);
+    box-shadow: 0 0 16px var(--accent-glow, rgba(184,114,255,0.5));
 }
 
-.toggle-checkbox:checked + .toggle-switch:before {
-    left: 3rem;
+.toggle-checkbox:checked + .toggle-switch::before {
+    left: 2.8rem;
 }
 
 .toggle-checkbox {
@@ -227,16 +287,114 @@ h1, h2, h3, h4, h5, h6 {
     visibility: hidden;
 }
 
-/* fim - toggle */
+/* ── Botão primário (Começar/Pausar) ───────── */
+.app__card-primary-button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2.8rem;
+}
 
-/* Para Tablets */
+.app__card-primary-button {
+    padding: 1.2rem 3.2rem;
+    min-width: 16rem;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    border-radius: 10rem;
+    background: var(--linear-botes);
+    font-family: Montserrat;
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    box-shadow:
+        0 4px 24px var(--accent-glow, rgba(184,114,255,0.4)),
+        0 1px 0 rgba(255,255,255,0.15) inset;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+.app__card-primary-button::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background var(--transition-fast);
+    border-radius: inherit;
+}
+
+.app__card-primary-button:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+        0 8px 32px var(--accent-glow, rgba(184,114,255,0.55)),
+        0 1px 0 rgba(255,255,255,0.2) inset;
+    filter: brightness(1.08);
+}
+
+.app__card-primary-button:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 2px 12px var(--accent-glow, rgba(184,114,255,0.3));
+}
+
+.app__card-primary-butto-icon {
+    width: 2.2rem;
+    height: 2.2rem;
+}
+
+/* ── Footer ────────────────────────────────── */
+.app__footer {
+    display: flex;
+    width: 100%;
+    padding: 2.4rem 6rem;
+    justify-content: center;
+    align-items: center;
+    background: rgba(1, 11, 21, 0.8);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    backdrop-filter: blur(8px);
+    position: relative;
+    z-index: 1;
+}
+
+.app__footer-text {
+    color: rgba(182, 182, 182, 0.5);
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: 0.01em;
+}
+
+/* ── Animações ─────────────────────────────── */
+@keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cardEntrance {
+    from { opacity: 0; transform: translateY(32px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes floatImage {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-12px); }
+}
+
+/* ── Responsivo ────────────────────────────── */
 @media (max-width: 1024px) and (min-width: 768px) {
     .app__section-banner-container {
         width: 48rem;
     }
 }
 
-/* Para Celulares */
 @media (max-width: 767px) {
     .app__section-banner-container {
         width: 32rem;
@@ -248,5 +406,10 @@ h1, h2, h3, h4, h5, h6 {
 
     .app__card-timer {
         font-size: 6rem;
+    }
+
+    .app__card-button {
+        font-size: 1.4rem;
+        padding: 0.6rem 1.2rem;
     }
 }
