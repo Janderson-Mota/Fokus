@@ -22,23 +22,26 @@
     <main class="app">
         <header class="app__header">
             <figure class="app__logo-figure">
-                <img class="app__logo-image" src="./imagens/logo.png" alt="">
+                <img class="app__logo-image" src="./imagens/logo.png" alt="Fokus logo">
             </figure>
         </header>
+
         <section class="app__section-banner-container">
 
-            <h1 class="app__title">
-                Otimize sua produtividade,<br>
-                <strong class="app__title-strong">mergulhe no que importa.</strong>
-            </h1>
+            <div class="app__left-column">
+                <h1 class="app__title">
+                    Otimize sua<br>produtividade,<br>
+                    <strong class="app__title-strong">mergulhe no<br>que importa.</strong>
+                </h1>
 
+                <figure class="app__image-figure">
+                    <img class="app__image" src="./imagens/foco.png" alt="">
+                </figure>
+            </div>
 
-            <figure class="app__image-figure">
-                <img class="app__image" src="./imagens/foco.png" alt="">
-            </figure>
-        </section>
-        <section class="app__section-card-container">
             <div class="app__card">
+
+                <!-- Tabs de contexto -->
                 <ul class="app__card-list">
                     <li class="app__card-list-item">
                         <button data-contexto="foco" class="app__card-button app__card-button--foco active">Foco</button>
@@ -50,36 +53,124 @@
                         <button data-contexto="long" class="app__card-button app__card-button--longo">Descanso longo</button>
                     </li>
                 </ul>
-                <div id="timer" class="app__card-timer"></div>
-                <ul class="app__card-list">
-                    <li class="app__card-list-item">
-                        <label class="toggle">
-                            <input class="toggle-checkbox" type="checkbox" id="alternar-musica">
-                            <div class="toggle-switch"></div>
-                        </label>
-                    </li>
-                    <li class="app__card-list-item">
-                        <label class="app__card-list-label" for="alternar-musica">
-                            Música
-                        </label>
-                    </li>
-                </ul>
+
+                <!-- Timer display -->
+                <div id="timer" class="app__card-timer">25:00</div>
+
+                <!-- Progress ring -->
+                <div class="app__progress-ring-wrapper">
+                    <svg class="app__progress-ring" viewBox="0 0 120 6" xmlns="http://www.w3.org/2000/svg">
+                        <rect class="app__progress-track" x="0" y="0" width="120" height="6" rx="3"/>
+                        <rect class="app__progress-fill" id="progress-fill" x="0" y="0" width="60" height="6" rx="3"/>
+                    </svg>
+                </div>
+
+                <!-- Separador -->
+                <div class="app__card-divider"></div>
+
+                <!-- Seção de música -->
+                <div class="app__music-section">
+
+                    <div class="app__music-header">
+                        <div class="app__music-toggle-group">
+                            <ul class="app__card-list app__card-list--inline">
+                                <li class="app__card-list-item">
+                                    <label class="toggle">
+                                        <input class="toggle-checkbox" type="checkbox" id="alternar-musica">
+                                        <div class="toggle-switch"></div>
+                                    </label>
+                                </li>
+                                <li class="app__card-list-item">
+                                    <label class="app__card-list-label" for="alternar-musica">
+                                        Música ambiente
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Volume control -->
+                        <div class="app__volume-control" id="volume-control">
+                            <button class="app__volume-icon-btn" id="volume-btn" title="Mutar/desmutar">
+                                <svg class="app__volume-icon" id="volume-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path id="volume-wave-1" d="M15.54 8.46C16.48 9.4 17 10.67 17 12C17 13.33 16.48 14.6 15.54 15.54" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path id="volume-wave-2" d="M19.07 4.93C20.99 6.85 22.06 9.37 22.06 12C22.06 14.63 20.99 17.15 19.07 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <input type="range" class="app__volume-slider" id="volume-slider" min="0" max="100" value="70" step="1">
+                            <span class="app__volume-value" id="volume-value">70</span>
+                        </div>
+                    </div>
+
+                    <!-- Seletor de músicas -->
+                    <div class="app__music-picker" id="music-picker">
+                        <p class="app__music-picker-label">Escolha a trilha</p>
+                        <div class="app__music-grid">
+                            <button class="app__music-chip active" data-track="lofi" id="track-lofi">
+                                <span class="app__music-chip-icon">🎹</span>
+                                <span class="app__music-chip-name">Lo-fi</span>
+                                <span class="app__music-chip-check">
+                                    <svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </span>
+                            </button>
+                            <button class="app__music-chip" data-track="rain" id="track-rain">
+                                <span class="app__music-chip-icon">🌧️</span>
+                                <span class="app__music-chip-name">Chuva</span>
+                                <span class="app__music-chip-check">
+                                    <svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </span>
+                            </button>
+                            <button class="app__music-chip" data-track="forest" id="track-forest">
+                                <span class="app__music-chip-icon">🌲</span>
+                                <span class="app__music-chip-name">Floresta</span>
+                                <span class="app__music-chip-check">
+                                    <svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </span>
+                            </button>
+                            <button class="app__music-chip" data-track="cafe" id="track-cafe">
+                                <span class="app__music-chip-icon">☕</span>
+                                <span class="app__music-chip-name">Café</span>
+                                <span class="app__music-chip-check">
+                                    <svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </span>
+                            </button>
+                            <button class="app__music-chip" data-track="space" id="track-space">
+                                <span class="app__music-chip-icon">🪐</span>
+                                <span class="app__music-chip-name">Cosmos</span>
+                                <span class="app__music-chip-check">
+                                    <svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </span>
+                            </button>
+                            <button class="app__music-chip" data-track="waves" id="track-waves">
+                                <span class="app__music-chip-icon">🌊</span>
+                                <span class="app__music-chip-name">Ondas</span>
+                                <span class="app__music-chip-check">
+                                    <svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Separador -->
+                <div class="app__card-divider"></div>
+
+                <!-- Botão primário -->
                 <div class="app__card-primary-button-wrapper">
                     <button id="start-pause" class="app__card-primary-button">
+                        <span class="app__card-primary-button-ripple"></span>
                         <img class="app__card-primary-butto-icon" src="./imagens/play_arrow.png" alt="">
                         <span id="start-pause-text">Começar</span>
                     </button>
+                    <button id="reset-timer" class="app__card-reset-button" type="button">Zerar</button>
                 </div>
-            </div>
-        </section>
 
-        <!-- <footer class="app__footer">
-            <p class="app__footer-text">
-               
-            </p>
-        </footer> -->
+            </div>
+
+        </section>
     </main>
 
+   
 </body>
-
 </html>

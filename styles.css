@@ -1,42 +1,47 @@
 /* =============================================
-   FOKUS — CSS Redesign
-   Estética: Dark luxury / glassmorphism sutil
+   FOKUS — CSS Redesign v2
+   Estética: Dark luxury · glassmorphism elevado
+   Mantém todas as classes originais do JS
    ============================================= */
 
 :root {
-    --color-primary: #123456;
+    --color-primary:   #123456;
     --color-secondary: #FFF;
-    --azul-royal: #144480;
-    --fundo-card-timer: rgba(20, 68, 128, 0.18);
-    --lils: #B872FF;
-    --linear-botes: linear-gradient(135deg, #B872FF 0%, #144480 100%);
+    --azul-royal:      #144480;
+    --lils:            #B872FF;
+    --linear-botes:    linear-gradient(135deg, #B872FF 0%, #144480 100%);
 
     --glass-border: rgba(255, 255, 255, 0.10);
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glow-purple: rgba(184, 114, 255, 0.35);
-    --glow-blue: rgba(20, 68, 128, 0.5);
+    --glass-bg:     rgba(255, 255, 255, 0.05);
 
     --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-med:  0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* ── Temas de contexto ─────────────────────── */
+/* ── Temas ─────────────────────────────────── */
 [data-contexto="foco"] {
     --main-bg-color: linear-gradient(160deg, #4A0E8F 0%, #0D1F3C 45%, #010810 100%);
     --accent:        #B872FF;
-    --accent-glow:   rgba(184, 114, 255, 0.4);
+    --accent-glow:   rgba(184, 114, 255, 0.40);
+    --accent-soft:   rgba(184, 114, 255, 0.12);
+    --accent-chip:   rgba(184, 114, 255, 0.18);
 }
 
 [data-contexto="descanso-curto"] {
     --main-bg-color: linear-gradient(160deg, #0A5C4A 0%, #061E2E 45%, #010810 100%);
     --accent:        #00E5A0;
     --accent-glow:   rgba(0, 229, 160, 0.35);
+    --accent-soft:   rgba(0, 229, 160, 0.10);
+    --accent-chip:   rgba(0, 229, 160, 0.15);
 }
 
 [data-contexto="descanso-longo"] {
     --main-bg-color: linear-gradient(160deg, #0D4FA8 0%, #061628 45%, #010810 100%);
     --accent:        #5AB4FF;
     --accent-glow:   rgba(90, 180, 255, 0.35);
+    --accent-soft:   rgba(90, 180, 255, 0.10);
+    --accent-chip:   rgba(90, 180, 255, 0.15);
 }
 
 /* ── Reset & Base ──────────────────────────── */
@@ -54,13 +59,12 @@ html {
 
 body {
     min-height: 100vh;
-    background: url('./imagens/pattern.png');
-    background-size: cover;
-    background-repeat: no-repeat;
+    background: url('./imagens/pattern.png') center/cover no-repeat;
     overflow-x: hidden;
+    font-family: 'Montserrat', sans-serif;
 }
 
-/* Camada de ruído sutil sobre o fundo */
+/* Camada de ruído */
 body::before {
     content: '';
     position: fixed;
@@ -75,7 +79,7 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Unbounded', cursive;
 }
 
-/* ── Header / Logo ─────────────────────────── */
+/* ── Header ────────────────────────────────── */
 .app__header {
     position: relative;
     z-index: 1;
@@ -92,26 +96,38 @@ h1, h2, h3, h4, h5, h6 {
     transition: filter var(--transition-med);
 }
 
-/* ── Banner ────────────────────────────────── */
+/* ── Layout principal ──────────────────────── */
 .app__section-banner-container {
     position: relative;
     z-index: 1;
-    width: 99rem;
+    max-width: 128rem;
     margin: 0 auto;
+    padding: 2rem 4rem 8rem;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 4rem;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 6rem;
     flex-wrap: wrap;
 }
 
+/* Coluna esquerda: título + imagem empilhados */
+.app__left-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4rem;
+    flex: 1 1 30rem;
+    min-width: 26rem;
+    max-width: 40rem;
+    padding-top: 2rem;
+}
+
+/* ── Título ────────────────────────────────── */
 .app__title {
-    line-height: 155%;
-    font-size: 5.2rem;
-    font-style: normal;
+    line-height: 148%;
+    font-size: 4.4rem;
     color: var(--color-secondary);
     font-weight: 200;
-    max-width: 46rem;
     letter-spacing: -0.02em;
     text-shadow: 0 2px 40px rgba(0,0,0,0.5);
     animation: fadeSlideUp 0.7s var(--transition-med) both;
@@ -123,80 +139,87 @@ h1, h2, h3, h4, h5, h6 {
     transition: color var(--transition-med);
 }
 
+/* ── Imagem ────────────────────────────────── */
+.app__image-figure {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
 .app__image {
+    width: 100%;
+    max-width: 30rem;
+    height: auto;
     filter: drop-shadow(0 8px 48px var(--accent-glow, rgba(184,114,255,0.3)));
     transition: filter var(--transition-med);
     animation: floatImage 6s ease-in-out infinite;
 }
 
 /* ── Card central ──────────────────────────── */
-.app__section-card-container {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    z-index: 1;
-}
-
 .app__card {
+    flex: 1 1 38rem;
+    min-width: 32rem;
     border-radius: 2.8rem;
     border: 1px solid var(--glass-border);
     background: var(--glass-bg);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    padding: 3.2rem;
-    margin: 6rem 0;
-    width: 59rem;
-    max-width: 90%;
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    padding: 2.8rem 3rem;
     box-shadow:
         0 0 0 1px rgba(255,255,255,0.04) inset,
-        0 32px 80px rgba(0,0,0,0.45),
-        0 0 60px var(--accent-glow, rgba(184,114,255,0.15));
+        0 32px 80px rgba(0,0,0,0.5),
+        0 0 80px var(--accent-glow, rgba(184,114,255,0.12));
     transition: box-shadow var(--transition-med);
     animation: cardEntrance 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* ── Botões de contexto ────────────────────── */
+/* ── Tabs de contexto ──────────────────────── */
 .app__card-list {
     list-style: none;
-    padding: 0;
+    padding: 0.6rem;
     margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.8rem;
-    background: rgba(0,0,0,0.2);
-    border-radius: 1.6rem;
-    padding: 0.6rem;
+    gap: 0.4rem;
+    background: rgba(0,0,0,0.25);
+    border-radius: 1.8rem;
     border: 1px solid var(--glass-border);
 }
 
+.app__card-list-item {
+    display: flex;
+    align-items: center;
+}
+
 .app__card-button {
-    font-family: Montserrat;
-    font-size: 1.6rem;
-    font-style: normal;
-    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 500;
     line-height: 150%;
     background: none;
     padding: 0.8rem 1.6rem;
-    color: rgba(255,255,255,0.55);
+    color: rgba(255,255,255,0.50);
     border: none;
     cursor: pointer;
     outline: none;
-    border-radius: 1.2rem;
+    border-radius: 1.4rem;
     transition: color var(--transition-fast), background var(--transition-fast);
     white-space: nowrap;
+    letter-spacing: 0.01em;
 }
 
 .app__card-button:hover:not(.active) {
-    color: rgba(255,255,255,0.85);
-    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.07);
 }
 
 .app__card-button.active {
     background: var(--accent, #B872FF);
     color: #fff;
     font-weight: 600;
-    box-shadow: 0 4px 24px var(--accent-glow, rgba(184,114,255,0.45));
+    box-shadow: 0 2px 20px var(--accent-glow, rgba(184,114,255,0.5));
     transition: background var(--transition-med), box-shadow var(--transition-med);
 }
 
@@ -205,52 +228,102 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--color-secondary);
     text-align: center;
     font-family: 'Unbounded', cursive;
-    font-size: 11rem;
-    font-style: normal;
+    font-size: 13rem;
     font-weight: 700;
     line-height: 1;
-    margin: 3.6rem 0 2.8rem;
+    margin: 2.8rem 0 2rem;
     letter-spacing: -0.04em;
     text-shadow:
-        0 0 40px var(--accent-glow, rgba(184,114,255,0.5)),
+        0 0 60px var(--accent-glow, rgba(184,114,255,0.5)),
         0 2px 20px rgba(0,0,0,0.5);
     transition: text-shadow var(--transition-med);
 }
 
-/* ── Toggle de música ──────────────────────── */
-.app__card-list-label {
-    color: rgba(255,255,255,0.7);
-    font-family: Montserrat;
-    font-size: 1.6rem;
-    font-style: normal;
-    font-weight: 400;
-    letter-spacing: 0.02em;
+/* ── Barra de progresso ────────────────────── */
+.app__progress-ring-wrapper {
+    width: 100%;
+    margin-bottom: 2.4rem;
+    padding: 0 0.4rem;
+}
+
+.app__progress-ring {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    overflow: visible;
+}
+
+.app__progress-track {
+    fill: rgba(255,255,255,0.08);
+}
+
+.app__progress-fill {
+    fill: var(--accent, #B872FF);
+    filter: drop-shadow(0 0 6px var(--accent-glow, rgba(184,114,255,0.6)));
+    transition: width var(--transition-med), fill var(--transition-med);
+}
+
+/* ── Divisor ───────────────────────────────── */
+.app__card-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+    margin: 3rem 0;
+}
+
+/* ── Seção de música ───────────────────────── */
+.app__music-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+}
+
+.app__music-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+}
+
+.app__music-toggle-group {
+    flex-shrink: 0;
 }
 
 /* Segunda lista (toggle + label) */
+.app__card-list.app__card-list--inline,
 .app__card-list + .app__card-list {
     background: transparent;
     border: none;
     padding: 0;
-    gap: 1.2rem;
-    margin-top: 2rem;
-    justify-content: center;
+    gap: 1rem;
+    justify-content: flex-start;
 }
 
+.app__card-list-label {
+    color: rgba(255,255,255,0.75);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+}
+
+/* ── Toggle switch ─────────────────────────── */
 .toggle {
     cursor: pointer;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
 }
 
 .toggle-switch {
     display: inline-block;
-    background: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.12);
     border-radius: 1.6rem;
-    width: 5.2rem;
-    height: 2.8rem;
+    width: 5rem;
+    height: 2.6rem;
     position: relative;
-    vertical-align: middle;
-    border: 1px solid rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.14);
     transition: background var(--transition-fast), box-shadow var(--transition-fast);
 }
 
@@ -259,17 +332,13 @@ h1, h2, h3, h4, h5, h6 {
     display: block;
     background: #fff;
     border-radius: 50%;
-    width: 2rem;
-    height: 2rem;
+    width: 1.8rem;
+    height: 1.8rem;
     position: absolute;
     top: 0.3rem;
     left: 0.3rem;
     transition: left var(--transition-fast), box-shadow var(--transition-fast);
     box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-}
-
-.toggle:hover .toggle-switch::before {
-    box-shadow: 0 1px 8px rgba(0,0,0,0.4);
 }
 
 .toggle-checkbox:checked + .toggle-switch {
@@ -279,7 +348,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .toggle-checkbox:checked + .toggle-switch::before {
-    left: 2.8rem;
+    left: 2.7rem;
 }
 
 .toggle-checkbox {
@@ -287,59 +356,320 @@ h1, h2, h3, h4, h5, h6 {
     visibility: hidden;
 }
 
-/* ── Botão primário (Começar/Pausar) ───────── */
+/* ── Volume control ────────────────────────── */
+.app__volume-control {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+    min-width: 14rem;
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.app__volume-control--hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(8px);
+}
+
+.app__volume-icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: rgba(255,255,255,0.55);
+    transition: color var(--transition-fast);
+}
+
+.app__volume-icon-btn:hover {
+    color: rgba(255,255,255,0.9);
+}
+
+.app__volume-icon {
+    width: 1.8rem;
+    height: 1.8rem;
+    transition: opacity var(--transition-fast);
+}
+
+/* range slider de volume */
+.app__volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.15);
+    outline: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.app__volume-slider::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(
+        to right,
+        var(--accent) 0%,
+        var(--accent) calc(var(--vol, 70) * 1%),
+        rgba(255,255,255,0.15) calc(var(--vol, 70) * 1%)
+    );
+}
+
+.app__volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    background: #fff;
+    margin-top: -5px;
+    box-shadow: 0 0 8px var(--accent-glow, rgba(184,114,255,0.5));
+    transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.app__volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 16px var(--accent-glow, rgba(184,114,255,0.7));
+}
+
+.app__volume-slider::-moz-range-thumb {
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    background: #fff;
+    border: none;
+    box-shadow: 0 0 8px var(--accent-glow, rgba(184,114,255,0.5));
+}
+
+.app__volume-value {
+    font-family: 'Unbounded', cursive;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.4);
+    min-width: 2.4rem;
+    text-align: right;
+}
+
+/* ── Music picker ──────────────────────────── */
+.app__music-picker {
+    overflow: hidden;
+    transition: max-height var(--transition-slow), opacity var(--transition-med);
+    max-height: 20rem;
+    opacity: 1;
+}
+
+.app__music-picker--hidden {
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.app__music-picker-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.30);
+    margin-bottom: 1.2rem;
+}
+
+.app__music-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+}
+
+/* Chip de música */
+.app__music-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 1rem 1.2rem;
+    border-radius: 1.4rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04);
+    cursor: pointer;
+    outline: none;
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        transform var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+.app__music-chip::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent, #B872FF);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    border-radius: inherit;
+}
+
+.app__music-chip:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.16);
+    transform: translateY(-2px);
+}
+
+.app__music-chip.active {
+    border-color: var(--accent, #B872FF);
+    background: var(--accent-chip, rgba(184,114,255,0.18));
+    box-shadow: 0 0 20px var(--accent-glow, rgba(184,114,255,0.25));
+}
+
+.app__music-chip-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.app__music-chip-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.app__music-chip.active .app__music-chip-name {
+    color: #fff;
+}
+
+.app__music-chip-check {
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    background: var(--accent, #B872FF);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.app__music-chip-check svg {
+    width: 1rem;
+    height: 1rem;
+    color: #fff;
+    stroke: #fff;
+}
+
+.app__music-chip.active .app__music-chip-check {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ── Botão primário ────────────────────────── */
 .app__card-primary-button-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 2.8rem;
+    gap: 1rem;
 }
 
 .app__card-primary-button {
-    padding: 1.2rem 3.2rem;
-    min-width: 16rem;
+    padding: 1.4rem 4rem;
+    min-width: 18rem;
     color: #fff;
     border: none;
     cursor: pointer;
     outline: none;
     border-radius: 10rem;
     background: var(--linear-botes);
-    font-family: Montserrat;
-    font-size: 1.8rem;
-    font-weight: 600;
-    letter-spacing: 0.03em;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1rem;
     box-shadow:
-        0 4px 24px var(--accent-glow, rgba(184,114,255,0.4)),
+        0 4px 28px var(--accent-glow, rgba(184,114,255,0.45)),
         0 1px 0 rgba(255,255,255,0.15) inset;
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
+    transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        filter var(--transition-fast);
     position: relative;
     overflow: hidden;
 }
 
-.app__card-primary-button::after {
-    content: '';
+.app__card-primary-button-ripple {
     position: absolute;
     inset: 0;
-    background: rgba(255,255,255,0);
-    transition: background var(--transition-fast);
     border-radius: inherit;
+    background: rgba(255,255,255,0);
+    transition: background 0.15s;
 }
 
 .app__card-primary-button:hover {
-    transform: translateY(-2px) scale(1.02);
+    transform: translateY(-3px) scale(1.02);
     box-shadow:
-        0 8px 32px var(--accent-glow, rgba(184,114,255,0.55)),
+        0 10px 40px var(--accent-glow, rgba(184,114,255,0.6)),
         0 1px 0 rgba(255,255,255,0.2) inset;
-    filter: brightness(1.08);
+    filter: brightness(1.10);
 }
 
 .app__card-primary-button:active {
-    transform: translateY(0) scale(0.98);
+    transform: translateY(0) scale(0.97);
     box-shadow: 0 2px 12px var(--accent-glow, rgba(184,114,255,0.3));
+}
+
+.app__card-primary-button:active .app__card-primary-button-ripple {
+    background: rgba(255,255,255,0.10);
+}
+
+#reset-timer {
+    padding: 1rem 2rem;
+    min-width: 9rem;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.25);
+    cursor: pointer;
+    outline: none;
+    border-radius: 8rem;
+    background: transparent;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    transition: all var(--transition-fast);
+}
+
+#reset-timer:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.4);
+    transform: translateY(-2px);
+}
+
+#reset-timer:active {
+    transform: translateY(0);
+    background: rgba(255,255,255,0.12);
+}
+
+#reset-timer:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    background: transparent;
 }
 
 .app__card-primary-butto-icon {
@@ -347,69 +677,77 @@ h1, h2, h3, h4, h5, h6 {
     height: 2.2rem;
 }
 
-/* ── Footer ────────────────────────────────── */
-.app__footer {
-    display: flex;
-    width: 100%;
-    padding: 2.4rem 6rem;
-    justify-content: center;
-    align-items: center;
-    background: rgba(1, 11, 21, 0.8);
-    border-top: 1px solid rgba(255,255,255,0.05);
-    backdrop-filter: blur(8px);
-    position: relative;
-    z-index: 1;
-}
-
-.app__footer-text {
-    color: rgba(182, 182, 182, 0.5);
-    text-align: center;
-    font-family: Montserrat;
-    font-size: 1.4rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%;
-    letter-spacing: 0.01em;
-}
-
 /* ── Animações ─────────────────────────────── */
 @keyframes fadeSlideUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(24px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes cardEntrance {
-    from { opacity: 0; transform: translateY(32px) scale(0.97); }
+    from { opacity: 0; transform: translateY(36px) scale(0.96); }
     to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes floatImage {
     0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(-12px); }
+    50%       { transform: translateY(-14px); }
 }
 
 /* ── Responsivo ────────────────────────────── */
-@media (max-width: 1024px) and (min-width: 768px) {
+@media (max-width: 900px) {
     .app__section-banner-container {
-        width: 48rem;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 2rem 6rem;
+        gap: 3rem;
+    }
+
+    .app__left-column {
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-width: 100%;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .app__title {
+        font-size: 3.4rem;
+        flex: 1 1 20rem;
+    }
+
+    .app__image-figure {
+        flex: 1 1 16rem;
+    }
+
+    .app__image {
+        max-width: 22rem;
+    }
+
+    .app__card {
+        width: 100%;
+        max-width: 100%;
     }
 }
 
-@media (max-width: 767px) {
-    .app__section-banner-container {
-        width: 32rem;
-    }
-
+@media (max-width: 560px) {
     .app__title {
         font-size: 2.6rem;
     }
 
     .app__card-timer {
-        font-size: 6rem;
+        font-size: 7rem;
     }
 
     .app__card-button {
-        font-size: 1.4rem;
-        padding: 0.6rem 1.2rem;
+        font-size: 1.2rem;
+        padding: 0.6rem 1rem;
+    }
+
+    .app__music-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .app__card {
+        padding: 2.2rem 2rem;
     }
 }
