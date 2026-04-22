@@ -18,3 +18,5 @@ Se as trilhas padrão não forem sua praia, é fácil colocar as suas:
 ## 💻 Tech Stack
 * **HTML5/CSS3**: Layout moderno com variáveis CSS e animações fluidas.
 * **Vanilla JS**: Lógica de temporizador e manipulação de áudio sem dependências externas.
+  
+<img width="1506" height="836" alt="image" src="https://github.com/user-attachments/assets/b95f4aa7-9156-44ee-a1b4-29d2128ae80a" />
